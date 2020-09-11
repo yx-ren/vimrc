@@ -69,9 +69,10 @@ endif " has("autocmd")
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree'
 Plug 'vim-scripts/taglist.vim', { 'on':  'TlistToggle' }
 Plug 'vim-scripts/OmniCppComplete'
+Plug 'kshenoy/vim-signature'
 "Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
 "Plug 'ludovicchabant/vim-gutentags'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
