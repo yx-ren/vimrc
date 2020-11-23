@@ -144,3 +144,25 @@ set tags+=~/work/skyguard/internal/include/tags
 
 " -------------------- "
 
+""""""""""""""""""""""""""""""""""""""""""""
+" 新建文件时，自动根据扩展名加载模板文件
+autocmd! BufNewFile * call LoadTemplate()
+fun LoadTemplate()
+    "获取扩展名或者类型名
+    let ext = expand ("%:e")
+    let tpl = expand("~/.vim/tpl/".ext.".tpl")
+    if !filereadable(tpl)
+        echohl WarningMsg | echo "No template [".tpl."] for .".ext | echohl None
+        return
+    endif
+
+    "读取模板内容
+    silent execute "0r ".tpl
+    "指定光标位置
+    silent execute "normal G$"
+    silent call search("#cursor#", "w")
+    silent execute "normal 8x"
+    "进入插入模式
+    startinsert
+endfun
+""""""""""""""""""""""""""""""""""""""""""""
