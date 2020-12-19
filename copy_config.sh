@@ -12,4 +12,4 @@ VIM_PLUG_PATH="./plug.vim"
 cp $VIM_PLUG_PATH $VIM_AUTOLOAD_DIR
 
 cp ".tmux.conf" ~/
-
+cp -r .vim/ ~/
