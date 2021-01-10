@@ -74,7 +74,7 @@ Plug 'vim-scripts/taglist.vim', { 'on':  'TlistToggle' }
 Plug 'vim-scripts/OmniCppComplete'
 Plug 'kshenoy/vim-signature'
 "Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
-"Plug 'ludovicchabant/vim-gutentags'
+Plug 'ludovicchabant/vim-gutentags'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'jiangmiao/auto-pairs'
@@ -88,6 +88,8 @@ call plug#end()
 
 map <C-n> : NERDTree<CR>
 
+" -------------------- nerdtree -------------------- "
+
 " -------------------- taglist -------------------- "
 
 let Tlist_Show_One_File=1    " 只展示一个文件的taglist
@@ -95,6 +97,32 @@ let Tlist_Exit_OnlyWindow=1  " 当taglist是最后以个窗口时自动退出
 let Tlist_Use_Right_Window=1 " 在右边显示taglist窗口
 let Tlist_Sort_Type="name"   " tag按名字排序
 map <C-l> : TlistToggle<CR>
+
+" -------------------- taglist -------------------- "
+
+" -------------------- kshenoy/vim-signature -------------------- "
+
+" gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
+let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+
+" 所生成的数据文件的名称
+let g:gutentags_ctags_tagfile = '.tags'
+
+" 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
+let s:vim_tags = expand('~/.cache/tags')
+let g:gutentags_cache_dir = s:vim_tags
+
+" 配置 ctags 的参数
+let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+
+" -------------------- kshenoy/vim-signature -------------------- "
+
+" 检测 ~/.cache/tags 不存在就新建
+if !isdirectory(s:vim_tags)
+   silent! call mkdir(s:vim_tags, 'p')
+endif
 
 " -------------------- OmniCppComplete -------------------- "
 
