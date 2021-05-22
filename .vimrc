@@ -136,8 +136,8 @@ let OmniCpp_MayCompleteScope=1      "打开 :: 操作符
 let OmniCpp_GlobalScopeSearch=1
 let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
 
-set tags+=~/.vim/tags/cpp_src/tags
-set tags+=/usr/include/c++/tags
+set tags+=~/.vim/tags/.root/cpp/stl/.tags
+set tags+=~/.vim/tags/.root/cpp/include/.tags
 set tags+=~/work/skyguard/internal/include/tags
 
 " -------------------- other -------------------- "
