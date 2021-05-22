@@ -18,3 +18,9 @@ do
 done
 
 ./copy_config.sh
+if [ $? != 0 ]; then
+    echo "copy configs failed"
+    exit $?
+fi
+
+./install.sh
