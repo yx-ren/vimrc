@@ -69,6 +69,7 @@ endif " has("autocmd")
 
 call plug#begin('~/.vim/plugged')
 
+Plug 'junegunn/vim-easy-align'
 Plug 'scrooloose/nerdtree'
 Plug 'vim-scripts/taglist.vim', { 'on':  'TlistToggle' }
 Plug 'vim-scripts/OmniCppComplete'
@@ -85,6 +86,15 @@ call plug#end()
 " ---------------------------------------- plugs config ----------------------------------------"
 
 " -------------------- nerdtree -------------------- "
+
+map <C-n> : NERDTree<CR>
+
+" -------------------- vim-easy-align begin -------------------- "
+
+xmap gb <Plug>(EasyAlign)
+nmap gb <Plug>(EasyAlign)
+
+" -------------------- vim-easy-align end -------------------- "
 
 map <C-n> : NERDTree<CR>
 
