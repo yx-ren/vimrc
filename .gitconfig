@@ -1,0 +1,11 @@
+[alias]
+    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+[color "branch"]
+    current = bold cyan
+    local = normal
+    remote = bold red
+    upstream = bold red
+[core]
+	editor = vim
+[http]
+	sslVerify = false
