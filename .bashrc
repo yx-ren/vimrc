@@ -9,3 +9,7 @@ HOME_DIR=$(echo ~)
 export PATH="$PATH:$HOME_DIR/work/github/yx-ren/scripts"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+if [ "$TERM" == "xterm" ]; then
+    export TERM=xterm-256color
+fi
