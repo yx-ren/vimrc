@@ -37,6 +37,8 @@ set encoding=utf-8
 
 set statusline=%{&ff}\|%{&fenc!=''?&fenc:&enc}\|%y\|c:%v\,r:%l\ of\ %L\|%f
 
+set t_Co=256 " enable 256 color
+
 "------------------------------------------------------------------------------
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
@@ -79,6 +81,7 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'jiangmiao/auto-pairs'
+"Plug 'ycm-core/YouCompleteMe'
 
 call plug#end()
 
@@ -99,6 +102,23 @@ nmap gb <Plug>(EasyAlign)
 map <C-n> : NERDTree<CR>
 
 " -------------------- nerdtree -------------------- "
+
+let g:ycm_add_preview_to_completeopt = 0
+let g:ycm_show_diagnostics_ui = 0
+let g:ycm_server_log_level = 'info'
+let g:ycm_min_num_identifier_candidate_chars = 2
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+let g:ycm_complete_in_strings=1
+let g:ycm_key_invoke_completion = '<c-z>'
+set completeopt=menu,menuone
+
+
+let g:ycm_semantic_triggers =  {
+           \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
+           \ 'cs,lua,javascript': ['re!\w{2}'],
+           \ }
+
+"noremap <c-z> <NOP>
 
 " -------------------- taglist -------------------- "
 
