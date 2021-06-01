@@ -18,7 +18,7 @@ set shiftwidth=4
 set expandtab
 syntax on                       " turn syntax highlighting on by default
 set cursorline
-highlight CursorLine   cterm=NONE ctermbg=red ctermfg=NONE guibg=NONE guifg=NONE
+"highlight CursorLine   cterm=NONE ctermbg=blue ctermfg=NONE guibg=NONE guifg=NONE
 set cursorcolumn
 highlight CursorColumn   cterm=NONE ctermbg=green ctermfg=NONE guibg=NONE guifg=NONE
 set hls
@@ -37,7 +37,7 @@ set encoding=utf-8
 
 set statusline=%{&ff}\|%{&fenc!=''?&fenc:&enc}\|%y\|c:%v\,r:%l\ of\ %L\|%f
 
-set t_Co=256 " enable 256 color
+"set t_Co=256
 
 "------------------------------------------------------------------------------
 " Only do this part when compiled with support for autocommands.
