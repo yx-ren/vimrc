@@ -20,10 +20,10 @@ syntax on                       " turn syntax highlighting on by default
 set cursorline
 "highlight CursorLine   cterm=NONE ctermbg=blue ctermfg=NONE guibg=NONE guifg=NONE
 set cursorcolumn
-highlight CursorColumn   cterm=NONE ctermbg=green ctermfg=NONE guibg=NONE guifg=NONE
+"highlight CursorColumn   cterm=NONE ctermbg=green ctermfg=NONE guibg=NONE guifg=NONE
 set hls
 highlight Search term=reverse ctermbg=4 ctermfg=7
-highlight visual term=reverse ctermbg=11 ctermfg=7
+"highlight visual term=reverse ctermbg=11 ctermfg=7
 
 set incsearch
 set wrapscan
@@ -33,11 +33,12 @@ set statusline=%<%F%h%m%r\ [%{&ff}]\ (%{strftime(\"%H:%M\ %d/%m/%Y\",getftime(ex
 
 set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 set termencoding=utf-8
+set term=screen
 set encoding=utf-8
 
 set statusline=%{&ff}\|%{&fenc!=''?&fenc:&enc}\|%y\|c:%v\,r:%l\ of\ %L\|%f
 
-"set t_Co=256
+set t_Co=256
 
 "------------------------------------------------------------------------------
 " Only do this part when compiled with support for autocommands.
@@ -81,6 +82,8 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'jiangmiao/auto-pairs'
+Plug 'rking/ag.vim'
+
 "Plug 'ycm-core/YouCompleteMe'
 
 call plug#end()
@@ -147,6 +150,14 @@ let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
 let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
 let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 
+" 忽略不相关文件夹
+"let g:gutentags_ctags_extra_args += ['--exclude=bazel-*']
+let g:gutentags_ctags_extra_args += ['--exclude=build']
+let g:gutentags_ctags_extra_args += ['--exclude=deps']
+
+" 忽略不相关文件
+let g:gutentags_ctags_extra_args += ['*.java']
+
 " -------------------- kshenoy/vim-signature -------------------- "
 
 " 检测 ~/.cache/tags 不存在就新建
@@ -169,7 +180,6 @@ let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
 set tags=./.tags;,.tags
 set tags+=~/.vim/tags/.root/cpp/stl/.tags
 set tags+=~/.vim/tags/.root/cpp/include/.tags
-set tags+=~/work/skyguard/internal/include/tags
 
 " -------------------- other -------------------- "
 
@@ -196,9 +206,6 @@ set tags+=~/work/skyguard/internal/include/tags
 "let OmniCpp_MayCompleteScope = 1    " 输入 :: 后自动补全
 "let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
 "
-"set tags+=~/.vim/tags/cpp_src/tags
-"set tags+=/usr/include/c++/tags
-"set tags+=~/work/skyguard/internal/include/tags
 
 "map <c-]> g<c-]>
 
