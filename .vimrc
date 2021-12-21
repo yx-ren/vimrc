@@ -156,7 +156,7 @@ let g:gutentags_ctags_extra_args += ['--exclude=build']
 let g:gutentags_ctags_extra_args += ['--exclude=deps']
 
 " 忽略不相关文件
-let g:gutentags_ctags_extra_args += ['*.java']
+let g:gutentags_ctags_extra_args += ['--exclude=*.java']
 
 " -------------------- kshenoy/vim-signature -------------------- "
 
