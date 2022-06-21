@@ -236,3 +236,5 @@ fun LoadTemplate()
     startinsert
 endfun
 """"""""""""""""""""""""""""""""""""""""""""
+
+map cmt o//####################//<ESC>o<ESC>
