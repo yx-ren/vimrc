@@ -11,7 +11,9 @@ set nocompatible                " vi compatible is LAME
 set background=dark             " Use colours that work well on a dark background (Console is usually black)
 set showmode                    " show the current mode
 "set clipboard=unnamed           " set clipboard to unnamed to access the system clipboard under windows
-set clipboard^=unnamed,unnamedplus
+"set clipboard^=unnamed,unnamedplus
+set clipboard+=unnamedplus
+
 set nu
 set tabstop=4
 set shiftwidth=4
@@ -23,7 +25,7 @@ set cursorcolumn
 "highlight CursorColumn   cterm=NONE ctermbg=green ctermfg=NONE guibg=NONE guifg=NONE
 set hls
 highlight Search term=reverse ctermbg=4 ctermfg=7
-"highlight visual term=reverse ctermbg=11 ctermfg=7
+highlight visual term=reverse ctermbg=11 ctermfg=7
 
 set incsearch
 set wrapscan
@@ -33,7 +35,8 @@ set statusline=%<%F%h%m%r\ [%{&ff}]\ (%{strftime(\"%H:%M\ %d/%m/%Y\",getftime(ex
 
 set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 set termencoding=utf-8
-set term=screen
+"set term=screen
+set term=xterm-256color
 set encoding=utf-8
 
 set statusline=%{&ff}\|%{&fenc!=''?&fenc:&enc}\|%y\|c:%v\,r:%l\ of\ %L\|%f
@@ -74,7 +77,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/vim-easy-align'
 Plug 'scrooloose/nerdtree'
-Plug 'vim-scripts/taglist.vim', { 'on':  'TlistToggle' }
+Plug 'vim-scripts/taglist.vim'
 Plug 'vim-scripts/OmniCppComplete'
 Plug 'kshenoy/vim-signature'
 "Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
@@ -84,6 +87,13 @@ Plug 'junegunn/fzf.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'rking/ag.vim'
 
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-indent'
+Plug 'kana/vim-textobj-syntax'
+Plug 'kana/vim-textobj-function', { 'for':['c', 'cpp', 'vim', 'java'] }
+Plug 'sgur/vim-textobj-parameter'
+Plug 'ojroques/vim-oscyank'
+
 "Plug 'ycm-core/YouCompleteMe'
 
 call plug#end()
@@ -91,20 +101,21 @@ call plug#end()
 
 " ---------------------------------------- plugs config ----------------------------------------"
 
-" -------------------- nerdtree -------------------- "
+" -------------------- nerdtree plugin begin -------------------- "
 
 map <C-n> : NERDTree<CR>
 
-" -------------------- vim-easy-align begin -------------------- "
+" -------------------- nerdtree plugin end -------------------- "
+
+" -------------------- vim-easy-align plugin begin -------------------- "
 
 xmap gb <Plug>(EasyAlign)
 nmap gb <Plug>(EasyAlign)
 
-" -------------------- vim-easy-align end -------------------- "
+" -------------------- vim-easy-align plugin end -------------------- "
 
 map <C-n> : NERDTree<CR>
 
-" -------------------- nerdtree -------------------- "
 
 let g:ycm_add_preview_to_completeopt = 0
 let g:ycm_show_diagnostics_ui = 0
@@ -123,7 +134,7 @@ let g:ycm_semantic_triggers =  {
 
 "noremap <c-z> <NOP>
 
-" -------------------- taglist -------------------- "
+" -------------------- taglist plugin begin -------------------- "
 
 let Tlist_Show_One_File=1    " 只展示一个文件的taglist
 let Tlist_Exit_OnlyWindow=1  " 当taglist是最后以个窗口时自动退出
@@ -131,15 +142,24 @@ let Tlist_Use_Right_Window=1 " 在右边显示taglist窗口
 let Tlist_Sort_Type="name"   " tag按名字排序
 map <C-l> : TlistToggle<CR>
 
-" -------------------- taglist -------------------- "
+" -------------------- taglist plugin end -------------------- "
 
-" -------------------- kshenoy/vim-signature -------------------- "
+" -------------------- kshenoy/vim-signature plugin begin -------------------- "
 
 " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
 let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
 
 " 所生成的数据文件的名称
 let g:gutentags_ctags_tagfile = '.tags'
+
+" 同时开启 ctags 和 gtags 支持：
+let g:gutentags_modules = []
+if executable('ctags')
+	let g:gutentags_modules += ['ctags']
+endif
+if executable('gtags-cscope') && executable('gtags')
+	let g:gutentags_modules += ['gtags_cscope']
+endif
 
 " 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
 let s:vim_tags = expand('~/.cache/tags')
@@ -153,6 +173,9 @@ let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extras=+q']
 let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
 let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 
+" 如果使用 universal ctags 需要增加下面一行，老的 Exuberant-ctags 不能加下一行
+let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
+
 " 忽略不相关文件夹
 "let g:gutentags_ctags_extra_args += ['--exclude=bazel-*']
 let g:gutentags_ctags_extra_args += ['--exclude=build']
@@ -161,14 +184,31 @@ let g:gutentags_ctags_extra_args += ['--exclude=deps']
 " 忽略不相关文件
 let g:gutentags_ctags_extra_args += ['--exclude=*.java']
 
-" -------------------- kshenoy/vim-signature -------------------- "
+" 禁用 gutentags 自动加载 gtags 数据库的行为
+let g:gutentags_auto_add_gtags_cscope = 0
+
+
+" -------------------- kshenoy/vim-signature plugin end -------------------- "
+
+" -------------------- fzf plugin begin -------------------- "
+
+map <C-i> : Windows<CR>
+map <C-o> : Buffers<CR>
+map <C-p> : FZF<CR>
+map <C-u> : Ag<CR>
+
+" -------------------- fzf plugin end -------------------- "
+
+" -------------------- ctags plugin begin -------------------- "
 
 " 检测 ~/.cache/tags 不存在就新建
 if !isdirectory(s:vim_tags)
    silent! call mkdir(s:vim_tags, 'p')
 endif
 
-" -------------------- OmniCppComplete -------------------- "
+" -------------------- ctags plugin end -------------------- "
+
+" -------------------- OmniCppComplete plugin begin -------------------- "
 
 set completeopt=longest,menu
 let OmniCpp_NamespaceSearch = 2     " search namespaces in the current buffer   and in included files
@@ -179,6 +219,26 @@ let OmniCpp_MayCompleteArrow=1      "打开 -> 操作符
 let OmniCpp_MayCompleteScope=1      "打开 :: 操作符
 let OmniCpp_GlobalScopeSearch=1
 let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+
+" -------------------- OmniCppComplete plugin end -------------------- "
+
+" -------------------- ojroques/vim-oscyank plugin begin -------------------- "
+
+nmap <leader>y <Plug>OSCYankOperator
+nmap <leader>yy <leader>y_
+vmap <leader>y <Plug>OSCYankVisual
+
+let g:oscyank_max_length = 0  " maximum length of a selection
+let g:oscyank_silent     = 0  " disable message on successful copy
+let g:oscyank_trim       = 0  " trim surrounding whitespaces before copy
+let g:oscyank_osc52      = "\x1b]52;c;%s\x07"  " the OSC52 format string to use
+
+autocmd TextYankPost *
+    \ if v:event.operator is 'y' && v:event.regname is '0' |
+    \ execute 'OSCYankRegister 0' |
+    \ endif
+
+" -------------------- ojroques/vim-oscyank plugin end -------------------- "
 
 set tags=./.tags;,.tags
 set tags+=~/.vim/tags/.root/cpp/stl/.tags
