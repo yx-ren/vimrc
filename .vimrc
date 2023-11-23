@@ -93,6 +93,7 @@ Plug 'kana/vim-textobj-syntax'
 Plug 'kana/vim-textobj-function', { 'for':['c', 'cpp', 'vim', 'java'] }
 Plug 'sgur/vim-textobj-parameter'
 Plug 'ojroques/vim-oscyank'
+Plug 'markonm/traces.vim'
 
 "Plug 'ycm-core/YouCompleteMe'
 
